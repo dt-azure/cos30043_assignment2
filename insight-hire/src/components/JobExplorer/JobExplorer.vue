@@ -1,5 +1,5 @@
 <script setup>
-import JobList from './components/JobExplorer/JobList.vue/index.js'
+import JobList from './JobList.vue'
 </script>
 
 <template>
