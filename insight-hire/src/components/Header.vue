@@ -7,7 +7,9 @@
         <div class="container-header py-3">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="logo">
-                    <img src="../assets/company-logo.png" alt="Company Logo">
+                    <a href="#">
+                        <img src="../assets/company-logo.png" alt="Company Logo">
+                    </a>
                 </div>
 
                 <nav class="navbar navbar-expand-lg">
