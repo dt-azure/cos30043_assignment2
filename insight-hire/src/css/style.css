@@ -1,3 +1,43 @@
 body {
   font-family: "Inter", sans-serif;
+}
+
+.container-header {
+  max-width: 90vw;
+  margin: 0 auto;
+}
+
+header {
+  border-bottom: 1px solid rgba(221, 221, 221, 0.6);
+}
+header .logo img {
+  max-height: 40px;
+}
+
+.nav-item a {
+  position: relative;
+  transition: all 0.2s ease-in-out;
+  padding: 0 !important;
+}
+.nav-item a.active {
+  font-weight: 600;
+}
+.nav-item a::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 0;
+  height: 1px;
+  background-color: #1E3A8A;
+  left: 50%;
+  bottom: 0;
+  margin-bottom: -2px;
+  transform: translateX(-50%);
+  transition: all 0.2s ease-in-out;
+}
+.nav-item a:hover {
+  color: #1E3A8A !important;
+}
+.nav-item a:hover::after {
+  width: 100%;
 }/*# sourceMappingURL=style.css.map */
