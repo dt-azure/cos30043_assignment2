@@ -3,7 +3,7 @@ import JobList from './JobList.vue'
 </script>
 
 <template>
-    <section class="job-explorer">
+    <section id="job-explorer">
         <div class="container">
             <div class="row">
                 <div class="job-list col-4">
