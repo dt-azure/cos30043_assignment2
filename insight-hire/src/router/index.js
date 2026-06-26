@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import Home from '../views/Home.vue'
+import JobList from '../components/JobExplorer/JobList.vue'
 
 
 const routes = [
-    { path: '/', component: Home },
+    { path: '/', component: JobList },
 ]
 
 const router = createRouter({
