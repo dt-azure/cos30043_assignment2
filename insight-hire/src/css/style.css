@@ -7,6 +7,11 @@ body {
   margin: 0 auto;
 }
 
+.container-todo {
+  max-width: 60vw;
+  margin: 0 auto;
+}
+
 header {
   border-bottom: 1px solid rgba(221, 221, 221, 0.6);
 }
@@ -60,4 +65,57 @@ header .logo img {
 #banner img {
   background-size: cover;
   background-position: center;
+}
+
+.btn-password-toggle {
+  border: var(--bs-border-width) solid var(--bs-border-color) !important;
+}
+
+.section-header {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1E3A8A;
+}
+
+.dropdown a {
+  cursor: pointer;
+}
+
+.modal h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.task-item .btn:hover {
+  background-color: #dc3545 !important;
+  border-color: #dc3545 !important;
+  color: white !important;
+}
+.task-item button {
+  border-color: #000000;
+}
+.task-item .btn:active,
+.task-item .btn.show {
+  color: #dc3545 !important;
+}
+.task-item.no-priority {
+  background-color: white !important;
+}
+.task-item.no-priority button {
+  border-color: #000000 !important;
+}
+.task-item.low-priority .dropdown button {
+  border-color: #ffc107;
+}
+.task-item.high-priority {
+  color: white !important;
+  background-color: #dc3545 !important;
+}
+.task-item.high-priority .btn:first-child {
+  border-left-color: white !important;
+}
+
+.dropdown-item:hover {
+  background-color: #0d6efd !important;
+  color: white !important;
 }/*# sourceMappingURL=style.css.map */
