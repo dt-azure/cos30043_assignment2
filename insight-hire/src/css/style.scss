@@ -1,5 +1,8 @@
 $color-primary: #1E3A8A;
 $color-border: rgba(221, 221, 221, 0.6);
+$color-blue: #0d6efd;
+$color-red: #dc3545;
+$color-yellow: #ffc107;
 
 body {
     font-family: "Inter", sans-serif;
@@ -7,6 +10,11 @@ body {
 
 .container-header {
     max-width: 90vw;
+    margin: 0 auto;
+}
+
+.container-todo {
+    max-width: 60vw;
     margin: 0 auto;
 }
 
@@ -76,4 +84,75 @@ header {
         background-size: cover;
         background-position: center;
     }
+}
+
+.btn-password-toggle {
+    border: var(--bs-border-width) solid var(--bs-border-color) !important;
+}
+
+.section-header {
+    font-size: 2rem;
+    font-weight: 600;
+    color: $color-primary;
+}
+
+.dropdown {
+    a {
+        cursor: pointer;
+    }
+}
+
+.modal {
+    h2 {
+        font-size: 1.8rem;
+        font-weight: 600;
+    }
+}
+
+.task-item {
+    .btn:hover {
+        background-color: $color-red !important;
+        border-color: $color-red !important;
+        color: #ffff !important;
+    }
+
+    button {
+            border-color: #000000;
+    }
+
+    .btn:active,
+    .btn.show {
+        color: $color-red !important;
+
+    }
+
+    &.no-priority {
+        background-color: #ffff !important;
+        
+        button {
+            border-color: #000000 !important;
+        }
+    }
+
+    &.low-priority {
+        .dropdown {
+            button {
+                border-color: $color-yellow;
+            }
+        }
+    }
+
+    &.high-priority {
+        color: #ffff !important;
+        background-color: $color-red !important;
+
+        .btn:first-child {
+            border-left-color: #ffff !important;
+        }
+    }
+}
+
+.dropdown-item:hover {
+    background-color: $color-blue !important;
+    color: #ffff !important;
 }
