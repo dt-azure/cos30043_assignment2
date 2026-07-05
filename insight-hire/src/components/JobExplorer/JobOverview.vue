@@ -19,7 +19,7 @@ const selectedJob = computed(() =>
 </script>
 
 <template>
-    <article v-if="selectedJob" class="job-overview d-flex flex-column justify-content-between p-3">
+    <article v-if="selectedJob" class="job-overview d-flex flex-column justify-content-between py-3 px-4">
         <div class="details">
             <p class="section-label mb-2">
                 {{ selectedJob.category }}
