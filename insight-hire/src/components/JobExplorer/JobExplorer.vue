@@ -12,7 +12,7 @@ async function loadData() {
     loadError.value = ''
 
     try {
-        const response = await fetch('/data/jobs.txt')
+        const response = await fetch(`${import.meta.env.BASE_URL}data/jobs.txt`)
 
         if (!response.ok) {
             throw new Error(
