@@ -20,13 +20,13 @@
                                     <a class="nav-link active" aria-current="page" href="#">Home</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Job Explorer</a>
+                                    <a class="nav-link" href="#job-explorer">Job Explorer</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Job Application</a>
+                                    <a class="nav-link" href="#application-form">Job Application</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">To-Do List</a>
+                                    <a class="nav-link" href="#to-do-list">To-Do List</a>
                                 </li>
                             </ul>
                         </div>
@@ -36,3 +36,6 @@
         </div>
     </header>
 </template>
+
+<style scoped lang="scss" src="./Header.scss">
+</style>
