@@ -27,25 +27,20 @@
         border-color 0.2s ease,
         background-color 0.2s ease,
         box-shadow 0.2s ease;
-}
 
-.job-nav-item:hover {
-    transform: translateX(3px);
-    border-color: #dfe5f2;
-    background-color: #f8faff;
-    color: #164fbd;
-}
+    &:hover {
+        transform: translateX(3px);
+        border-color: #dfe5f2;
+        background-color: #f8faff;
+        color: #164fbd;
+    }
 
-.job-nav-item.selected {
-    border-color: #d9e5ff;
-    background:
-        linear-gradient(
-            90deg,
-            rgb(30 97 222 / 0.11),
-            rgb(30 97 222 / 0.04)
-        );
-    color: #0e51cc;
-    box-shadow: inset 4px 0 0 #2161dc;
+    &.selected {
+        border-color: #d9e5ff;
+        background: linear-gradient(90deg,rgb(30 97 222 / 0.11),rgb(30 97 222 / 0.04));
+        color: #0e51cc;
+        box-shadow: inset 4px 0 0 #2161dc;
+    }
 }
 
 .job-icon {
