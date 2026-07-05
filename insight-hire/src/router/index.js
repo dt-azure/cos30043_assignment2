@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
 import JobExplorer from '../components/JobExplorer/JobExplorer.vue'
 import JobDetails from '../components/JobExplorer/JobDetails.vue'
 import JobPlaceholder from '../components/JobExplorer/JobPlaceholder.vue'
@@ -32,7 +32,7 @@ const routes = [
 ]
 
 const router = createRouter({
-    history: createWebHistory(),
+    history: createWebHashHistory(),
     routes
 })
 
