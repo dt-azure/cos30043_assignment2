@@ -1,5 +1,9 @@
 .job-overview {
-    min-height: 100%;
+    height: auto;
+    min-height: auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    scrollbar-gutter: stable;
 }
 
 .job-overview-footer {
@@ -23,13 +27,13 @@
         transform 0.2s ease,
         background-color 0.2s ease,
         box-shadow 0.2s ease;
-}
 
-.job-details-link:hover {
-    transform: translateY(-1px);
-    background-color: #174fb8;
-    color: #fff;
-    box-shadow: 0 8px 18px rgb(33 97 220 / 0.22);
+    &:hover {
+        transform: translateY(-1px);
+        background-color: #174fb8;
+        color: #fff;
+        box-shadow: 0 8px 18px rgb(33 97 220 / 0.22);
+    }
 }
 
 .job-not-found {
@@ -54,4 +58,14 @@
     background-color: #eaf1ff;
     color: #2161dc;
     font-size: 1.7rem;
+}
+
+@media (min-width: 992px) {
+    .job-overview {
+        height: 100%;
+        min-height: 0;
+        overflow-y: auto;
+        overflow-x: hidden;
+        scrollbar-gutter: stable;
+    }
 }
