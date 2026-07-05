@@ -5,55 +5,26 @@
     background-color: $color-border;
 }
 
-.job-route-content {
-    flex: 1;
-    min-height: 0;
-    height: 100%;
+.job-explorer-heading {
+    max-width: 100%;
 }
 
 .job-explorer-row {
-    height: min(720px, 78vh);
+    height: auto;
 }
 
 .job-explorer-row > aside,
 .job-explorer-row > main {
-    height: 100%;
-    min-height: 0;
-}
-
-.job-explorer-heading {
-    max-width: 650px;
-}
-
-.section-label {
-    color: #1d5ed8;
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-}
-
-.section-header {
-    color: #111936;
-    font-size: clamp(2rem, 4vw, 2.8rem);
-    font-weight: 750;
-}
-
-.section-description {
-    color: #697188;
-}
-
-.job-explorer-row {
-    height: 700px;
+    height: auto;
+    min-height: auto;
 }
 
 .job-list-panel,
 .job-details-panel {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    min-height: 0;
-    overflow: hidden;
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    overflow: visible;
     border: 1px solid #e5e8f0;
     border-radius: 24px;
     background-color: #fff;
@@ -61,33 +32,63 @@
 }
 
 .job-list-panel {
-    position: sticky;
-    top: 1.5rem;
-    padding: 1rem;
-}
-
-.job-details-panel {
+    position: static;
     display: flex;
+    padding: 1rem;
     flex-direction: column;
 }
 
-.job-details-panel > * {
-    flex: 1;
-    min-height: 0;
-    overflow-y: auto;
+.job-details-panel {
+    display: block;
 }
 
-@media (max-width: 996px) {
+.job-details-panel > * {
+    width: 100%;
+    height: auto;
+    min-height: auto;
+    overflow: visible;
+}
+
+.job-route-content {
+    width: 100%;
+    height: auto;
+    min-height: auto;
+}
+
+@media (min-width: 992px) {
+    .job-explorer-row {
+        height: min(720px, 78vh);
+    }
+
+    .job-explorer-row > aside,
+    .job-explorer-row > main {
+        height: 100%;
+        min-height: 0;
+    }
+
+    .job-list-panel,
+    .job-details-panel {
+        display: flex;
+        height: 100%;
+        min-height: 0;
+        overflow: hidden;
+        flex-direction: column;
+    }
+
     .job-list-panel {
         position: static;
     }
 
-    .job-navigation {
-        max-height: 420px;
+    .job-details-panel > * {
+        flex: 1;
+        height: 100%;
+        min-height: 0;
+        overflow: hidden;
     }
 
-    .job-details-panel {
-        min-height: auto;
-        padding: 1.4rem;
+    .job-route-content {
+        flex: 1;
+        height: 100%;
+        min-height: 0;
     }
 }
