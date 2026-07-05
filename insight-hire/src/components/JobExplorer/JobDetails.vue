@@ -29,10 +29,14 @@ function formatDate(dateString) {
         year: 'numeric'
     }).format(date)
 }
+
+function scrollToJobPanel() {
+    requestAnimationFrame(() => {document.getElementById('job-details-panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' })})
+}
 </script>
 
 <template>
-    <article v-if="selectedJob" class="job-details p-3">
+    <article v-if="selectedJob" class="job-details py-3 px-4">
         <section class="job-details-header">
             <div>
                 <span class="job-category">
@@ -119,11 +123,7 @@ function formatDate(dateString) {
             <h2>Required Skills</h2>
 
             <div class="tag-list">
-                <span
-                    v-for="skill in selectedJob.required_skills"
-                    :key="skill"
-                    class="skill-tag"
-                >
+                <span v-for="skill in selectedJob.required_skills" :key="skill" class="skill-tag">
                     {{ skill }}
                 </span>
             </div>
@@ -133,10 +133,7 @@ function formatDate(dateString) {
             <h2>Preferred Qualifications</h2>
 
             <ul class="qualification-list">
-                <li
-                    v-for="qualification in selectedJob.preferred_qualifications"
-                    :key="qualification"
-                >
+                <li v-for="qualification in selectedJob.preferred_qualifications" :key="qualification">
                     <i class="fa-solid fa-check"></i>
                     <span>{{ qualification }}</span>
                 </li>
@@ -180,18 +177,11 @@ function formatDate(dateString) {
             </dl>
         </section>
 
-        <section
-            v-if="selectedJob.tags?.length"
-            class="job-section job-tags-section"
-        >
+        <section v-if="selectedJob.tags?.length" class="job-section job-tags-section">
             <h2>Job Tags</h2>
 
             <div class="tag-list">
-                <span
-                    v-for="tag in selectedJob.tags"
-                    :key="tag"
-                    class="job-tag"
-                >
+                <span v-for="tag in selectedJob.tags" :key="tag" class="job-tag">
                     #{{ tag }}
                 </span>
             </div>
@@ -204,15 +194,13 @@ function formatDate(dateString) {
                     params: { jobId: selectedJob.job_id }
                 }"
                 class="back-link"
+                @click="scrollToJobPanel"
             >
                 <i class="fa-solid fa-arrow-left"></i>
                 Back To Overview
             </RouterLink>
 
-            <a
-                href="#application-form"
-                class="apply-button"
-            >
+            <a href="#application-form" class="apply-button">
                 Apply For This Position
                 <i class="fa-solid fa-arrow-right"></i>
             </a>
