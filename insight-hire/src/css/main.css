@@ -1,0 +1,19 @@
+body {
+  font-family: "Inter", sans-serif;
+}
+
+.container-header {
+  max-width: 90vw;
+  margin: 0 auto;
+}
+
+.container-todo {
+  max-width: 60vw;
+  margin: 0 auto;
+}
+
+.loading-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}/*# sourceMappingURL=main.css.map */
