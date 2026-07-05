@@ -232,7 +232,7 @@ function validateForm(event) {
 <template>
     <section id="application-form">
         <div class="container py-5">
-            <div class="application-heading mb-4">
+            <div class="application-heading mb-4 text-center">
                 <p class="section-label mb-2">
                     Join our team
                 </p>
@@ -654,10 +654,7 @@ function validateForm(event) {
                                         Applicant Agreement
                                     </p>
 
-                                    <h2
-                                        id="termsModalTitle"
-                                        class="modal-title"
-                                    >
+                                    <h2 id="termsModalTitle" class="modal-title">
                                         Terms & Conditions
                                     </h2>
                                 </div>
