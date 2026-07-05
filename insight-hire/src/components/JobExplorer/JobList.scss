@@ -1,0 +1,149 @@
+.job-navigation {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    gap: 0.55rem;
+    padding-right: 0.2rem;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
+    padding-right: 0.8rem;
+}
+
+.job-nav-item {
+    position: relative;
+    display: flex;
+    width: 100%;
+    padding: 0.8rem 0.75rem;
+    box-sizing: border-box;
+    align-items: center;
+    gap: 0.9rem;
+    border: 1px solid transparent;
+    border-radius: 17px;
+    color: #4f5870;
+    text-decoration: none;
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.job-nav-item:hover {
+    transform: translateX(3px);
+    border-color: #dfe5f2;
+    background-color: #f8faff;
+    color: #164fbd;
+}
+
+.job-nav-item.selected {
+    border-color: #d9e5ff;
+    background:
+        linear-gradient(
+            90deg,
+            rgb(30 97 222 / 0.11),
+            rgb(30 97 222 / 0.04)
+        );
+    color: #0e51cc;
+    box-shadow: inset 4px 0 0 #2161dc;
+}
+
+.job-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 43px;
+    height: 43px;
+    border-radius: 13px;
+    background-color: #f0f3f9;
+    color: #8b93a5;
+    flex-shrink: 0;
+    font-size: 1rem;
+}
+
+.job-nav-item:hover .job-icon,
+.job-nav-item.selected .job-icon {
+    background-color: #2161dc;
+    color: #fff;
+    box-shadow: 0 7px 16px rgb(33 97 220 / 0.25);
+}
+
+.job-nav-item.selected .job-title {
+    color: #104fca;
+}
+
+.job-nav-item:hover .job-arrow,
+.job-nav-item.selected .job-arrow {
+    transform: translateX(3px);
+    color: #2161dc;
+}
+
+.job-nav-content {
+    display: flex;
+    flex: 1;
+    min-width: 0;
+    flex-direction: column;
+}
+
+.job-title {
+    overflow: hidden;
+    color: #202944;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.job-nav-item.router-link-active .job-title {
+    color: #104fca;
+}
+
+.job-company {
+    margin-top: 0.15rem;
+    overflow: hidden;
+    color: #737c91;
+    font-size: 0.85rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.job-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.8rem;
+    margin-top: 0.4rem;
+    color: #969dae;
+    font-size: 0.75rem;
+
+    span {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+}
+
+.job-arrow {
+    margin-right: 0.4rem;
+    color: #b1b7c5;
+    font-size: 0.75rem;
+    transition: transform 0.2s ease;
+}
+
+.job-nav-item:hover .job-arrow,
+.job-nav-item.router-link-active .job-arrow {
+    transform: translateX(3px);
+    color: #2161dc;
+}
+
+.job-navigation {
+    scrollbar-color: #d7ddeb transparent;
+    scrollbar-width: thin;
+}
+
+.job-navigation::-webkit-scrollbar {
+    width: 5px;
+}
+
+.job-navigation::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background-color: #d7ddeb;
+}
