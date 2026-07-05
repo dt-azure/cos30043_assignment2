@@ -4,5 +4,5 @@ import vue from '@vitejs/plugin-vue'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [vue()],
-  base: './cos30043_assignment2/'
+  base: '/cos30043_assignment2/'
 })
