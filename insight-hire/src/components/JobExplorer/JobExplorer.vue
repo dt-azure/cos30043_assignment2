@@ -45,7 +45,7 @@ onMounted(() => {
 <template>
     <section id="job-explorer">
         <div class="container py-5">
-            <div class="job-explorer-heading mb-4">
+            <div class="job-explorer-heading mb-4 text-center">
                 <p class="section-label mb-2">
                     Career opportunities
                 </p>
@@ -67,7 +67,7 @@ onMounted(() => {
                 </aside>
 
                 <main class="col-12 col-lg-8">
-                    <div class="job-details-panel">
+                    <div id="job-details-panel" class="job-details-panel">
                         <RouterView v-slot="{ Component }">
                             <component
                                 :is="Component"
