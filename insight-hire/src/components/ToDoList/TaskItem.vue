@@ -11,11 +11,11 @@ const props = defineProps({
 const emit = defineEmits(['update-priority', 'delete-task'])
 
 const priorityClasses = computed(() => {
-  if (props.taskItem.priority === 'low') {
+  if (props.taskItem.priority === 'Low') {
     return 'low-priority'
   }
 
-  if (props.taskItem.priority === 'high') {
+  if (props.taskItem.priority === 'High') {
     return 'high-priority'
   }
 
@@ -32,7 +32,10 @@ function deleteTask() {
 </script>
 
 <template>
-    <div class="task-item d-flex align-items-center mb-3 rounded-pill" :class="priorityClasses">
+  <div
+      class="task-item"
+      :class="priorityClasses"
+  >
       <span class="priority-indicator" aria-hidden="true"></span>
 
       <p class="task-text mb-0">
@@ -43,32 +46,43 @@ function deleteTask() {
           {{ taskItem.priority || 'Normal' }}
       </span>
 
-      <div class="task-actions d-flex align-items-stretch">
-        <div class="dropdown">
-          <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown button
-          </button>
-          <ul class="dropdown-menu">
-            <li>
-              <button type="button" class="dropdown-item" @click="updatePriority('high')">
-                Mark as High Priority
+      <div class="task-actions">
+          <div class="dropdown">
+              <button
+                  class="btn task-action-btn dropdown-toggle"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+              >
+                  Change priority
               </button>
-            </li>
-            <li>
-                <button type="button" class="dropdown-item" @click="updatePriority('low')">
-                  Mark as Low Priority
-                </button>
-            </li>
-            <li>
-                <button type="button" class="dropdown-item" @click="updatePriority('')">
-                  Remove Priority
-                </button>
-            </li>
-          </ul>
-        </div>
-        <button type="button" class="btn delete-btn" @click="deleteTask">
-          Delete
-        </button>
+
+              <ul class="dropdown-menu dropdown-menu-end">
+                  <li>
+                    <button type="button" class="dropdown-item" @click="updatePriority('High')">
+                      Mark as High Priority
+                    </button>
+                  </li>
+                  <li>
+                      <button type="button" class="dropdown-item" @click="updatePriority('Low')">
+                        Mark as Low Priority
+                      </button>
+                  </li>
+                  <li>
+                      <button type="button" class="dropdown-item" @click="updatePriority('')">
+                        Remove Priority
+                      </button>
+                  </li>
+              </ul>
+          </div>
+
+          <button
+              type="button"
+              class="btn delete-btn"
+              @click="deleteTask"
+          >
+              Delete
+          </button>
       </div>
   </div>
 </template>
