@@ -1,0 +1,93 @@
+@use '../../css/variables' as *;
+
+#job-explorer {
+    min-height: 100vh;
+    background-color: $color-border;
+}
+
+.job-route-content {
+    flex: 1;
+    min-height: 0;
+    height: 100%;
+}
+
+.job-explorer-row {
+    height: min(720px, 78vh);
+}
+
+.job-explorer-row > aside,
+.job-explorer-row > main {
+    height: 100%;
+    min-height: 0;
+}
+
+.job-explorer-heading {
+    max-width: 650px;
+}
+
+.section-label {
+    color: #1d5ed8;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.section-header {
+    color: #111936;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 750;
+}
+
+.section-description {
+    color: #697188;
+}
+
+.job-explorer-row {
+    height: 700px;
+}
+
+.job-list-panel,
+.job-details-panel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+    border: 1px solid #e5e8f0;
+    border-radius: 24px;
+    background-color: #fff;
+    box-shadow: 0 10px 35px rgb(32 56 117 / 0.08);
+}
+
+.job-list-panel {
+    position: sticky;
+    top: 1.5rem;
+    padding: 1rem;
+}
+
+.job-details-panel {
+    display: flex;
+    flex-direction: column;
+}
+
+.job-details-panel > * {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+@media (max-width: 996px) {
+    .job-list-panel {
+        position: static;
+    }
+
+    .job-navigation {
+        max-height: 420px;
+    }
+
+    .job-details-panel {
+        min-height: auto;
+        padding: 1.4rem;
+    }
+}
