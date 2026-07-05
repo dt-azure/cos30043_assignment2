@@ -1,78 +1,74 @@
 @use '../../css/variables' as *;
 
 .task-item {
-    position: relative;
-    z-index: 1;
-    overflow: visible;
-
-    min-height: 58px;
-    padding: 0.45rem 0.55rem 0.45rem 1rem;
-    border: 1px solid #e2e6ea;
-    border-radius: 18px;
+    display: grid;
+    grid-template-columns: auto auto minmax(0, 1fr);
+    grid-template-areas:
+        "indicator label actions"
+        "text text text";
+    align-items: center;
+    gap: 0.65rem;
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #e3e7ef;
+    border-radius: 12px;
     background-color: #fff;
-    box-shadow: 0 3px 12px rgb(0 0 0 / 0.06);
+    box-shadow: 0 4px 14px rgb(32 56 117 / 0.07);
 
-    transition:
-        transform 0.2s ease,
-        box-shadow 0.2s ease,
-        border-color 0.2s ease;
-}
+    &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 7px 18px rgb(0 0 0 / 0.1);
+    }
 
-.task-item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 7px 18px rgb(0 0 0 / 0.1);
-}
+    &:has(.dropdown-menu.show)  {
+        z-index: 2000;
+    }
 
-.task-item:has(.dropdown-menu.show) {
-    z-index: 2000;
+    .dropdown-menu {
+        z-index: 2010;
+    }
 }
 
 .task-actions {
-    align-self: stretch;
-    flex-shrink: 0;
-}
-
-.task-actions .dropdown {
-    position: relative;
+    grid-area: actions;
     display: flex;
-    align-items: stretch;
-}
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.35rem;
+    min-width: 0;
 
-.task-item .dropdown-menu {
-    z-index: 2010;
+    .dropdown {
+        min-width: 0;
+    }
 }
 
 .priority-indicator {
-    width: 6px;
-    height: 32px;
-    margin-right: 1rem;
+    grid-area: indicator;
+    width: 5px;
+    height: 28px;
+    margin: 0;
     border-radius: 999px;
-    background-color: #adb5bd;
-    flex-shrink: 0;
 }
 
 .task-text {
-    flex: 1;
+    grid-area: text;
     min-width: 0;
-    padding-right: 1rem;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    padding-top: 0.15rem;
+    color: #37405a;
+    font-size: 0.9rem;
+    overflow-wrap: anywhere;
 }
 
 .priority-label {
-    margin-right: 0.75rem;
-    padding: 0.25rem 0.7rem;
+    grid-area: label;
+    margin: 0;
+    padding: 0.2rem 0.55rem;
+    font-size: 0.68rem;
+    white-space: nowrap;
     border-radius: 999px;
-    background-color: #f1f3f5;
-    color: #495057;
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: capitalize;
 }
 
-.task-action-btn,
-.delete-btn {
+.task-action-btn {
     height: 100%;
     border: 0;
     border-left: 1px solid #dee2e6;
@@ -83,7 +79,17 @@
 }
 
 .delete-btn {
-    border: 0 !important;
+    min-height: 34px;
+    padding: 0.35rem 0.45rem;
+    border: 0;
+    border-radius: 8px;
+    background-color: transparent;
+    color: #dc3545;
+    font-size: 0.72rem;
+}
+
+.task-action-btn::after {
+    margin-left: 0.35rem;
 }
 
 .task-action-btn:hover,
@@ -103,52 +109,75 @@
 }
 
 .no-priority {
-    background: linear-gradient(
-        90deg,
-        rgb(25 135 84 / 0.08),
-        white 22%
-    );
-}
+    background: linear-gradient(90deg,rgb(25 135 84 / 0.08),white 22%);
 
-.no-priority .priority-indicator {
-    background: $color-green;
-}
+    .priority-indicator {
+        background: $color-green;
+    }
 
-.no-priority .priority-label {
-    color: #146c43;
-    background: rgb(25 135 84 / 0.12);
+    .priority-label {
+        color: $color-green;
+        background: rgb(25 135 84 / 0.12);
+    }
 }
 
 .low-priority {
-    background: linear-gradient(
-        90deg,
-        rgb(255 193 7 / 0.11),
-        white 22%
-    );
-}
+    background: linear-gradient(90deg,rgb(255 193 7 / 0.11),white 22%);
 
-.low-priority .priority-indicator {
-    background: #f0ad00;
-}
+    .priority-indicator {
+        background: #f0ad00;
+    }
 
-.low-priority .priority-label {
-    color: #806000;
-    background: rgb(255 193 7 / 0.18);
+    .priority-label {
+        color: #806000;
+        background: rgb(255 193 7 / 0.18);
+    }
 }
 
 .high-priority {
-    background: linear-gradient(
-        90deg,
-        rgb(220 53 69 / 0.08),
-        white 22%
-    );
-}
+    background: linear-gradient(90deg,rgb(220 53 69 / 0.08),white 22%);
 
-.high-priority .priority-indicator {
-    background: $color-red;
-}
+    .priority-indicator {
+        background: $color-red;
+    }
 
-.high-priority .priority-label {
-    color: #b02a37;
+    .priority-label {
+        color: #b02a37;
     background: rgb(220 53 69 / 0.12);
+    }
+}
+
+@media (min-width: 768px) {
+    .task-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 0.55rem 0.7rem 0.55rem 1rem;
+        border-radius: 18px;
+    }
+
+    .priority-indicator {
+        width: 6px;
+        height: 32px;
+    }
+
+    .task-text {
+        flex: 1;
+        padding-top: 0;
+    }
+
+    .priority-label {
+        flex-shrink: 0;
+    }
+
+    .task-actions {
+        flex-shrink: 0;
+    }
+
+    .task-action-btn,
+    .delete-btn {
+        min-height: 40px;
+        padding: 0.55rem 0.75rem;
+        font-size: 0.82rem;
+    }
 }
