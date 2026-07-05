@@ -24,6 +24,9 @@ const jobCategory = ref('')
 const showModal = ref(false)
 const submitted = ref(false)
 
+const birthdateTouched = ref(false)
+const birthdateFocused = ref(false)
+
 const firstNameError = computed(() => {
     if (!firstName.value) {
         return 'Field is required.'
@@ -68,6 +71,18 @@ const birthdateError = computed(() => {
 
     return ''
 })
+
+function handleBirthdateFocus() {
+    birthdateFocused.value = true
+}
+
+function handleBirthdateBlur() {
+    if (birthdateFocused.value) {
+        birthdateTouched.value = true
+    }
+
+    birthdateFocused.value = false
+}
 
 const usernameError = computed(() => {
     if (!username.value) {
@@ -146,7 +161,7 @@ const postcodeError = computed(() => {
 })
 
 const mobileNoError = computed(() => {
-    if (!mobilePhonePattern.test(mobileNo.value)) {
+    if (mobileNo.value && !mobilePhonePattern.test(mobileNo.value)) {
         return 'Phone number must be 10 digits and start with 04.' 
     }
 
@@ -186,11 +201,14 @@ function showErrorMsg(id) {
 }
 
 function togglePasswordInput(id) {
-    const ele = document.getElementById(id)
-    const passwordType = ele.getAttribute('type')
-    const icon = id == 'password' ? document.querySelector("#password + button > #passwordToggleIcon") : document.querySelector("#passwordConfirm + button > #passwordToggleIcon")
+    const input = document.getElementById(id)
 
-    ele.setAttribute('type', passwordType === 'password' ? 'text' : 'password')
+    const iconId = id === 'password' ? 'passwordToggleIcon' : 'passwordConfirmToggleIcon'
+
+    const icon = document.getElementById(iconId)
+
+    input.type = input.type === 'password' ? 'text' : 'password'
+
     icon.classList.toggle('fa-eye')
     icon.classList.toggle('fa-eye-slash')
 }
@@ -214,207 +232,409 @@ function validateForm(event) {
 <template>
     <section id="application-form">
         <div class="container py-5">
-            <h4 class="section-header text-center mb-5">Application Form</h4>
-            <form @submit.prevent="validateForm" method="post" action="http://mercury.swin.edu.au/it000000/formtest.php" novalidate>
-                <fieldset class="mb-4">
-                    <legend class="mb-3">Personal Information</legend>
+            <div class="application-heading mb-4">
+                <p class="section-label mb-2">
+                    Join our team
+                </p>
 
-                    <div class="row">
-                        <div class="col-6 mb-3 pe-4">
-                            <label for="firstName" class="form-label">First Name</label>
+                <h2 class="section-header mb-2">
+                    Application Form
+                </h2>
+
+                <p class="section-description mb-0">
+                    Complete the form below to submit your application.
+                </p>
+            </div>
+
+            <form
+                class="application-panel"
+                method="post"
+                action="http://mercury.swin.edu.au/it000000/formtest.php"
+                novalidate
+                @submit.prevent="validateForm"
+            >
+                <fieldset class="form-section">
+                    <legend class="form-section-header">
+                        <span class="section-icon">
+                            <i class="fa-regular fa-user"></i>
+                        </span>
+
+                        <span>
+                            <span class="form-section-title">
+                                Personal information
+                            </span>
+
+                            <span class="form-section-subtitle">
+                                Tell us a little about yourself.
+                            </span>
+                        </span>
+                    </legend>
+
+                    <div class="row g-4">
+                        <div class="col-12 col-md-6">
+                            <label for="firstName" class="form-label">
+                                First name
+                            </label>
+
                             <input
+                                id="firstName"
+                                v-model="firstName"
                                 type="text"
                                 name="firstName"
-                                id="firstName"
                                 class="form-control"
+                                :class="{ 'is-invalid': submitted && !!firstNameError }"
                                 aria-describedby="firstNameError"
-                                v-model="firstName"
                                 @blur="showErrorMsg('firstNameError')"
-                            />
-                            <small id="firstNameError" class="error-msg text-danger d-none">{{ firstNameError }}</small>
+                            >
+
+                            <small id="firstNameError" class="error-msg text-danger d-none">
+                                {{ firstNameError }}
+                            </small>
                         </div>
 
-                        <div class="col-6 mb-3 pe-4">
-                            <label for="lastName" class="form-label">First Name</label>
+                        <div class="col-12 col-md-6">
+                            <label for="lastName" class="form-label">
+                                Last name
+                            </label>
+
                             <input
+                                id="lastName"
+                                v-model="lastName"
                                 type="text"
                                 name="lastName"
-                                id="lastName"
                                 class="form-control"
+                                :class="{ 'is-invalid': submitted && !!lastNameError }"
                                 aria-describedby="lastNameError"
-                                v-model="lastName"
                                 @blur="showErrorMsg('lastNameError')"
-                            />
-                            <small id="lastNameError" class="error-msg text-danger d-none">{{ lastNameError }}</small>
-                        </div>
-
-
-                        <div class="col-6 mb-3 pe-4">
-                            <label for="lastName" class="form-label">Birthdate</label>
-                            <VueDatePicker v-model="birthdate"
-                                        :formats="{ input: 'dd/MM/yyyy' }"
-                                        :time-config="{ enableTimePicker: false }" 
-                                        :max-date="new Date(new Date().getFullYear(), 0, 1)"
-                                        @blur="showErrorMsg('birthdateError')"
-                                        aria-describedby="birthdateError"
                             >
-                            </VueDatePicker>
-                            <small id="birthdateError" class="error-msg text-danger d-none">{{ birthdateError }}</small>
+
+                            <small id="lastNameError" class="error-msg text-danger d-none">
+                                {{ lastNameError }}
+                            </small>
                         </div>
-                    </div>          
-                </fieldset>
 
-                <fieldset class="mb-4">
-                    <legend class="mb-3">Account Details</legend>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label">
+                                Birthdate
+                            </label>
 
-                    <div class="row">
-                        <div class="col-6 mb-3 pe-4">
-                            <label for="username" class="form-label">Username</label>
-                            <input
-                                type="text"
-                                name="username"
-                                id="username"
-                                class="form-control"
-                                aria-describedby="usernameError"
-                                v-model="username"
-                                @blur="showErrorMsg('usernameError')"
+                            <VueDatePicker
+                                v-model="birthdate"
+                                :formats="{ input: 'dd/MM/yyyy' }"
+                                :time-config="{ enableTimePicker: false }"
+                                :max-date="new Date( new Date().getFullYear(), 0, 1)"
+                                aria-describedby="birthdateError"
+                                @focus="handleBirthdateFocus"
+                                @blur="handleBirthdateBlur"
                             />
-                            <small id="usernameError" class="error-msg text-danger d-none">{{ usernameError }}</small>
-                        </div>
 
-                        <div class="col-6 mb-3 pe-4">
-                            <label for="email" class="form-label">Email</label>
-                            <input
-                                type="text"
-                                name="email"
-                                id="email"
-                                class="form-control"
-                                aria-describedby="emailError"
-                                v-model="email"
-                                @blur="showErrorMsg('emailError')"
-                            />
-                            <small id="emailError" class="error-msg text-danger d-none">{{ emailError }}</small>
-                        </div>
-
-
-                        <div class="col-6 mb-3 pe-4">
-                            <label for="lastName" class="form-label">Password</label>
-                            <div class="input-group">
-                                <input
-                                    type="password"
-                                    name="password"
-                                    id="password"
-                                    class="form-control"
-                                    aria-describedby="passwordError"
-                                    v-model="password"
-                                    @blur="showErrorMsg('passwordError')"
-                                />
-                                <button class="btn btn-outline-secondary btn-password-toggle" type="button" @click="togglePasswordInput('password')">
-                                    <i id="passwordToggleIcon" class="fa-solid fa-eye"></i>
-                                </button>
-                            </div>
-                            <small id="passwordError" class="error-msg text-danger d-none">{{ passwordError }}</small>
-                        </div>
-
-                        <div class="col-6 mb-3 pe-4">
-                            <label for="lastName" class="form-label">Confirm Password</label>
-                            <div class="input-group">
-                                <input
-                                    type="password"
-                                    name="passwordConfirm"
-                                    id="passwordConfirm"
-                                    class="form-control"
-                                    aria-describedby="passwordConfirmError"
-                                    v-model="passwordConfirm"
-                                    @blur="showErrorMsg('passwordConfirmError')"
-                                />
-                                <button class="btn btn-outline-secondary btn-password-toggle" type="button" @click="togglePasswordInput('passwordConfirm')">
-                                    <i id="passwordToggleIcon" class="fa-solid fa-eye"></i>
-                                </button>
-                            </div>
-                            <small id="passwordConfirmError" class="error-msg text-danger d-none">{{ passwordConfirmError }}</small>
+                            <small v-if="(birthdateTouched || submitted) && birthdateError" id="birthdateError" class="error-msg text-danger d-none">
+                                {{ birthdateError }}
+                            </small>
                         </div>
                     </div>
                 </fieldset>
 
-                <fieldset class="mb-4">
-                    <legend class="mb-3">Address</legend>
+                <fieldset class="form-section">
+                    <legend class="form-section-header mt-2">
+                        <span class="section-icon">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </span>
 
-                    <div class="row">
-                        <div class="col-6 mb-3 pe-4">
-                            <label for="firstName" class="form-label">Street Address</label>
+                        <span>
+                            <span class="form-section-title">
+                                Account details
+                            </span>
+
+                            <span class="form-section-subtitle">
+                                Create your applicant account.
+                            </span>
+                        </span>
+                    </legend>
+
+                    <div class="row g-4">
+                        <div class="col-12 col-md-6">
+                            <label for="username" class="form-label">
+                                Username
+                            </label>
+
                             <input
+                                id="username"
+                                v-model="username"
                                 type="text"
-                                name="streetAddress"
-                                id="streetAddress"
+                                name="username"
                                 class="form-control"
-                                aria-describedby="streetAddressError"
-                                v-model="streetAddress"
-                                @blur="showErrorMsg('streetAddressError')"
-                            />
-                            <small id="streetAddressError" class="error-msg text-danger d-none">{{ streetAddressError }}</small>
+                                :class="{ 'is-invalid': submitted && !!usernameError }"
+                                aria-describedby="usernameError"
+                                @blur="showErrorMsg('usernameError')"
+                            >
+
+                            <small id="usernameError" class="error-msg text-danger d-none">
+                                {{ usernameError }}
+                            </small>
                         </div>
 
-                        <div class="col-6 mb-3 pe-4">
-                            <label for="lastName" class="form-label">Suburb</label>
+                        <div class="col-12 col-md-6">
+                            <label for="email" class="form-label">
+                                Email address
+                            </label>
+
                             <input
-                                type="text"
-                                name="suburb"
-                                id="suburb"
+                                id="email"
+                                v-model="email"
+                                type="email"
+                                name="email"
                                 class="form-control"
-                                aria-describedby="suburbError"
-                                v-model="suburb"
-                                @blur="showErrorMsg('suburbError')"
-                            />
-                            <small id="suburbError" class="error-msg text-danger d-none">{{ suburbError }}</small>
+                                :class="{ 'is-invalid': submitted && !!emailError }"
+                                aria-describedby="emailError"
+                                @blur="showErrorMsg('emailError')"
+                            >
+
+                            <small id="emailError" class="error-msg text-danger d-none">
+                                {{ emailError }}
+                            </small>
                         </div>
 
+                        <div class="col-12 col-md-6">
+                            <label for="password" class="form-label">
+                                Password
+                            </label>
 
-                        <div class="col-6 mb-3 pe-4">
-                            <label for="lastName" class="form-label">Postcode</label>
-                            <input
-                                type="text"
-                                name="postcode"
-                                id="postcode"
-                                class="form-control"
-                                aria-describedby="postcodeError"
-                                v-model="postcode"
-                                @blur="showErrorMsg('postcodeError')"
-                            />
-                            <small id="postcodeError" class="error-msg text-danger d-none">{{ postcodeError }}</small>
+                            <div class="input-group form-input-group">
+                                <input
+                                    id="password"
+                                    v-model="password"
+                                    type="password"
+                                    name="password"
+                                    class="form-control"
+                                    :class="{ 'is-invalid': submitted && !!passwordError }"
+                                    aria-describedby="passwordError"
+                                    @blur="showErrorMsg('passwordError')"
+                                >
+
+                                <button
+                                    type="button"
+                                    class="btn password-toggle"
+                                    aria-label="Show or hide password"
+                                    @click="togglePasswordInput('password')"
+                                >
+                                    <i id="passwordToggleIcon" class="fa-solid fa-eye"></i>
+                                </button>
+                            </div>
+
+                            <small id="passwordError" class="error-msg text-danger d-none">
+                                {{ passwordError }}
+                            </small>
                         </div>
 
-                        <div class="col-6 mb-3 pe-4">
-                            <label for="lastName" class="form-label">Mobile phone</label>
-                            <input
-                                type="text"
-                                name="mobileNo"
-                                id="mobileNo"
-                                class="form-control"
-                                aria-describedby="mobileNoError"
-                                v-model="mobileNo"
-                                @blur="showErrorMsg('mobileNoError')"
-                            />
-                            <small id="mobileNoError" class="error-msg text-danger d-none">{{ mobileNoError }}</small>
+                        <div class="col-12 col-md-6">
+                            <label for="passwordConfirm" class="form-label">
+                                Confirm password
+                            </label>
+
+                            <div class="input-group form-input-group">
+                                <input
+                                    id="passwordConfirm"
+                                    v-model="passwordConfirm"
+                                    type="password"
+                                    name="passwordConfirm"
+                                    class="form-control"
+                                    :class="{ 'is-invalid': submitted && !!passwordConfirmError }"
+                                    aria-describedby="passwordConfirmError"
+                                    @blur="showErrorMsg('passwordConfirmError')"
+                                >
+
+                                <button
+                                    type="button"
+                                    class="btn password-toggle"
+                                    aria-label="Show or hide password"
+                                    @click="togglePasswordInput('passwordConfirm')"
+                                >
+                                    <i id="passwordConfirmToggleIcon" class="fa-solid fa-eye"></i>
+                                </button>
+                            </div>
+
+                            <small id="passwordConfirmError" class="error-msg text-danger d-none">
+                                {{ passwordConfirmError }}
+                            </small>
                         </div>
-                    </div>          
+                    </div>
                 </fieldset>
 
-                <div class="job-category-dropdown col-6 mb-3 pe-4">
-                    <label for="jobCategory" class="form-label">Preferred Job Category</label>
-                    <select class="form-select" aria-label="Preferred Job Category" id="jobCategory" name="jobCategory" v-model="jobCategory">
-                        <option></option>
-                        <option value="ai">AI</option>
-                        <option value="dev">Development</option>
-                        <option value="business">Business</option>
-                    </select>
-                    <small id="jobCategoryError" class="error-msg text-danger d-none">{{ jobCategoryError }}</small>
+                <fieldset class="form-section">
+                    <legend class="form-section-header mt-2">
+                        <span class="section-icon">
+                            <i class="fa-regular fa-address-card"></i>
+                        </span>
+
+                        <span>
+                            <span class="form-section-title">
+                                Contact information
+                            </span>
+
+                            <span class="form-section-subtitle">
+                                Enter your address and phone number.
+                            </span>
+                        </span>
+                    </legend>
+
+                    <div class="row g-4">
+                        <div class="col-12 col-md-6">
+                            <label for="streetAddress" class="form-label">
+                                Street address
+                            </label>
+
+                            <input
+                                id="streetAddress"
+                                v-model="streetAddress"
+                                type="text"
+                                name="streetAddress"
+                                class="form-control"
+                                :class="{ 'is-invalid': submitted && !!streetAddressError }"
+                                aria-describedby="streetAddressError"
+                                @blur="showErrorMsg('streetAddressError')"
+                            >
+
+                            <small id="streetAddressError" class="error-msg text-danger d-none">
+                                {{ streetAddressError }}
+                            </small>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label for="suburb" class="form-label">
+                                Suburb
+                            </label>
+
+                            <input
+                                id="suburb"
+                                v-model="suburb"
+                                type="text"
+                                name="suburb"
+                                class="form-control"
+                                :class="{ 'is-invalid': submitted && !!suburbError }"
+                                aria-describedby="suburbError"
+                                @blur="showErrorMsg('suburbError')"
+                            >
+
+                            <small id="suburbError" class="error-msg text-danger d-none">
+                                {{ suburbError }}
+                            </small>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label for="postcode" class="form-label">
+                                Postcode
+                            </label>
+
+                            <input
+                                id="postcode"
+                                v-model="postcode"
+                                type="text"
+                                name="postcode"
+                                class="form-control"
+                                inputmode="numeric"
+                                :class="{ 'is-invalid': submitted && !!postcodeError }"
+                                aria-describedby="postcodeError"
+                                @blur="showErrorMsg('postcodeError')"
+                            >
+
+                            <small id="postcodeError" class="error-msg text-danger d-none">
+                                {{ postcodeError }}
+                            </small>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label for="mobileNo" class="form-label">
+                                Mobile phone
+                            </label>
+
+                            <input
+                                id="mobileNo"
+                                v-model="mobileNo"
+                                type="tel"
+                                name="mobileNo"
+                                class="form-control"
+                                :class="{ 'is-invalid': submitted && !!mobileNoError }"
+                                aria-describedby="mobileNoError"
+                                @blur="showErrorMsg('mobileNoError')"
+                            >
+
+                            <small id="mobileNoError" class="error-msg text-danger d-none">
+                                {{ mobileNoError }}
+                            </small>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <fieldset class="form-section">
+                    <legend class="form-section-header mt-2">
+                        <span class="section-icon">
+                            <i class="fa-solid fa-briefcase"></i>
+                        </span>
+
+                        <span>
+                            <span class="form-section-title">
+                                Job preferences
+                            </span>
+
+                            <span class="form-section-subtitle">
+                                Tell us which area interests you.
+                            </span>
+                        </span>
+                    </legend>
+
+                    <div class="row g-4">
+                        <div class="col-12 col-md-6">
+                            <label for="jobCategory" class="form-label">
+                                Preferred job category
+                            </label>
+
+                            <select
+                                id="jobCategory"
+                                v-model="jobCategory"
+                                class="form-select"
+                                name="jobCategory"
+                                :class="{ 'is-invalid': submitted && !!jobCategoryError }"
+                                aria-describedby="jobCategoryError"
+                                @blur="showErrorMsg('jobCategoryError')"
+                            >
+                                <option value="" disabled>
+                                    Select a category
+                                </option>
+                                <option value="ai">AI</option>
+                                <option value="ds">
+                                    Data Science
+                                </option>
+                                <option value="softdev">
+                                    Software Development
+                                </option>
+                                <option value="devops">
+                                    DevOps
+                                </option>
+                                <option value="cybersec">
+                                    Cyber Security
+                                </option>
+                            </select>
+
+                            <small id="jobCategoryError" class="error-msg text-danger d-none">
+                                {{ jobCategoryError }}
+                            </small>
+                        </div>
+                    </div>
+                </fieldset>
+
+                <div class="form-actions">
+                    <button type="button" class="btn terms-button" @click="showModal = true">
+                        <i class="fa-regular fa-file-lines"></i>
+                        Terms & Conditions
+                    </button>
+
+                    <button type="submit" class="btn submit-button">
+                        Submit application
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
                 </div>
 
-                <div class="btn-field d-flex justify-content-center align-items-center mt-5">
-                    <button type="button" class="btn btn-secondary me-5" @click="showModal = true">Terms & Conditions</button>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
                 <div
                     v-if="showModal"
                     class="modal fade show d-block"
@@ -424,48 +644,57 @@ function validateForm(event) {
                     aria-labelledby="termsModalTitle"
                     @click.self="showModal = false"
                 >
-                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                        <div class="modal-content">
+                    <div
+                        class="modal-dialog modal-dialog-centered modal-lg"
+                    >
+                        <div class="modal-content terms-modal">
                             <div class="modal-header">
-                                <h2 id="termsModalTitle" class="modal-title">
-                                    Terms & Conditions
-                                </h2>
+                                <div>
+                                    <p class="section-label mb-1">
+                                        Applicant Agreement
+                                    </p>
+
+                                    <h2
+                                        id="termsModalTitle"
+                                        class="modal-title"
+                                    >
+                                        Terms & Conditions
+                                    </h2>
+                                </div>
 
                                 <button type="button" class="btn-close" aria-label="Close" @click="showModal = false"></button>
                             </div>
 
                             <div class="modal-body">
                                 <p>
-                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                    Provident officiis quis accusamus pariatur ducimus sint aliquam
-                                    consequatur molestias vero, obcaecati repellendus minima excepturi
-                                    aliquid iste ipsam. Enim, veniam magnam distinctio impedit quod
-                                    ducimus illum maxime vitae cupiditate autem est velit.
-                                    <br>
-                                    <br>
-                                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. 
-                                    Tempore laboriosam fugit cum laudantium repellendus saepe vero commodi corrupti, voluptatibus 
-                                    eligendi voluptatem distinctio debitis explicabo ea. Quasi tempora neque repudiandae nihil 
-                                    voluptas molestiae iusto architecto reiciendis. Hic, excepturi incidunt quaerat beatae ullam 
-                                    dignissimos porro! Laborum reiciendis cupiditate ex hic quibusdam corrupti quam, eius, ipsam dolores 
-                                    voluptatibus magnam itaque necessitatibus voluptates, consectetur vel cumque voluptatum fuga adipisci. 
-                                    Doloremque amet fugit eveniet dolores iure voluptatibus blanditiis quam molestias veniam illum non quos, et, 
-                                    quaerat omnis culpa repellendus facere placeat eligendi architecto rem facilis obcaecati! 
-                                    Blanditiis numquam nulla neque iure libero tempora consequatur minus.
+                                    Lorem ipsum dolor sit amet,
+                                    consectetur adipisicing elit.
+                                </p>
+
+                                <p>
+                                    Please review the application
+                                    conditions before submitting your
+                                    information.
                                 </p>
                             </div>
 
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" @click="showModal = false" >
-                                    Close
+                                <button type="button" class="btn submit-button" @click="showModal = false">
+                                    I Understand
                                 </button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div v-if="showModal" class="modal-backdrop fade show"></div>
+                <div
+                    v-if="showModal"
+                    class="modal-backdrop fade show"
+                ></div>
             </form>
         </div>
     </section>
 </template>
+
+<style scoped lang="scss" src="./ApplicationForm.scss">
+</style>
