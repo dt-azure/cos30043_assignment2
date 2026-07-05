@@ -5,57 +5,73 @@ const props = defineProps({
   taskItem: {
     type: Object,
     required: true
-  },
-  taskIndex: {
-    type: Number,
-    required: true
   }
 })
 
-const emit = defineEmits(['change-priority', 'delete-task'])
+const emit = defineEmits(['update-priority', 'delete-task'])
 
 const priorityClasses = computed(() => {
   if (props.taskItem.priority === 'low') {
-    return 'low-priority border-dark bg-warning'
+    return 'low-priority'
   }
 
   if (props.taskItem.priority === 'high') {
-    return 'high-priority border-danger bg-danger'
+    return 'high-priority'
   }
 
-  return 'no-priority border-black'
+  return 'no-priority'
 })
 
-function changePriority(priority) {
-  emit('change-priority', props.taskIndex, priority)
+function updatePriority(priority) {
+  emit('update-priority', props.taskItem.id, priority)
 }
 
 function deleteTask() {
-  emit('delete-task', props.taskIndex)
+  emit('delete-task', props.taskItem.id)
 }
 </script>
 
 <template>
-    <div class="task-item rounded-pill border border-dark row bg-warning ps-4 mb-3 mx-0" :class="priorityClasses">
-        <p class="col-8 overflow-hidden d-flex align-items-center mb-0">{{ taskItem.text }}</p>
-        <div class="task-btn-field col-4 d-flex align-items-center justify-content-end pe-0">
-            <div class="dropdown">
-                <button class="btn btn-outline-danger dropdown-toggle rounded-0 border-top-0 border-bottom-0 border-end-0 bg-light" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Change Priority
+    <div class="task-item d-flex align-items-center mb-3 rounded-pill" :class="priorityClasses">
+      <span class="priority-indicator" aria-hidden="true"></span>
+
+      <p class="task-text mb-0">
+          {{ taskItem.text }}
+      </p>
+
+      <span class="priority-label">
+          {{ taskItem.priority || 'Normal' }}
+      </span>
+
+      <div class="task-actions d-flex align-items-stretch">
+        <div class="dropdown">
+          <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown button
+          </button>
+          <ul class="dropdown-menu">
+            <li>
+              <button type="button" class="dropdown-item" @click="updatePriority('high')">
+                Mark as High Priority
+              </button>
+            </li>
+            <li>
+                <button type="button" class="dropdown-item" @click="updatePriority('low')">
+                  Mark as Low Priority
                 </button>
-                <ul class="dropdown-menu">
-                    <li>
-                        <button type="button" class="dropdown-item" @click="changePriority('low')">Mark as Low Priority</button>
-                    </li>
-                    <li>
-                        <button type="button" class="dropdown-item" @click="changePriority('high')">Mark as High Priority</button>
-                    </li>
-                    <li>
-                        <button type="button" class="dropdown-item" @click="changePriority('')">Remove Priority</button>
-                    </li>
-                </ul>
-            </div>
-            <button type="button" class="btn btn-outline-danger rounded-end-pill border-top-0 border-bottom-0 border-end-0 bg-light" @click="deleteTask">Delete</button>
+            </li>
+            <li>
+                <button type="button" class="dropdown-item" @click="updatePriority('')">
+                  Remove Priority
+                </button>
+            </li>
+          </ul>
         </div>
-    </div>
+        <button type="button" class="btn delete-btn" @click="deleteTask">
+          Delete
+        </button>
+      </div>
+  </div>
 </template>
+
+<style scoped lang="scss" src="./TaskItem.scss">
+</style>
