@@ -9,3 +9,6 @@
         </div>
     </section>
 </template>
+
+<style scoped lang="scss" src="./Banner.scss">
+</style>
